@@ -1,0 +1,9 @@
+.terraform*
+terraform.tfstate*
+gcp-creds.json
+gcp-admin-creds.json
+*.swp
+kubespray/
+admin.conf
+*id_rsa*
+*.plan

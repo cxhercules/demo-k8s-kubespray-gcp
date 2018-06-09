@@ -1,0 +1,47 @@
+[all]
+## Configure 'ip' variable to bind kubernetes services on a
+## different ip than the default iface
+{% for item in masters -%}
+master{{ loop.index0 + 1 }} ansible_ssh_host={{ item }} ip={{ item }}
+{% endfor -%}
+{% for item in nodes -%}
+node{{ loop.index0 + 1 }} ansible_ssh_host={{ item }} ip={{ item }}
+{% endfor %}
+## configure a bastion host if your nodes are not directly reachable
+bastion ansible_host={{ bastion_ip }}
+
+[kube-master]
+{% for item in masters -%}
+master{{ loop.index0 + 1 }}
+{% endfor %}
+[etcd]
+{% for item in masters -%}
+{%- if masters|length >= 3 -%}
+master{{ loop.index0 + 1 }}
+{%- elif masters|length == 2 -%}
+master{{ loop.index0 + 1 }}
+{%- if loop.index0 is eq 1 %}
+node1
+{%- endif -%}
+{%- else -%}
+master1
+{% for item in nodes -%}
+{% if loop.index0 is lt 2 -%}
+nodes{{ loop.index0 + 1 }}
+{% endif -%}
+{%- endfor -%}
+{% endif %}
+{% endfor %}
+[kube-node]
+{% for item in nodes -%}
+node{{ loop.index0 + 1 }}
+{% endfor %}
+[k8s-cluster:children]
+kube-node
+kube-master
+
+[all:vars]
+ansible_ssh_user=core
+ansible_user=core
+ansible_become=yes
+ansible_python_interpreter="/opt/bin/python"
