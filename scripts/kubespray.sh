@@ -65,6 +65,11 @@ echo "masters: $master_ips"
 echo "workers: $node_ips"
 
 ## jinja2 template generation of inventory
+# check if directory for group vars exist
+if [ ! -d inventory/group_vars ]; then
+  mkdir -p inventory/group_vars
+fi 
+
 jq -n --arg masters "$master_ips" --arg nodes "$node_ips" --arg bastion_ip "$bastion_ip" '{ "masters":  ($masters|split(" ")), "nodes":  ($nodes|split(" ")), "bastion_ip": $bastion_ip  }'|jinja2 $git_root/templates/hosts.ini.jinja2 > inventory/hosts.ini
 jq -n --arg lb_ip "$lb_ip" '{ "lb_ip": $lb_ip  }'|jinja2 $git_root/templates/group_vars/all.yml.jinja2 > inventory/group_vars/all.yml
 jq -n --arg lb_ip "$lb_ip" '{ "lb_ip": $lb_ip  }'|jinja2 $git_root/templates/group_vars/k8s-cluster.yml.jinja2 > inventory/group_vars/k8s-cluster.yml
