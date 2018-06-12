@@ -84,3 +84,18 @@ module "workers_mig" {
     "ssh-keys" = "core:${file("${var.pub_key}")}"
   }
 }
+
+module "bastion" {
+  source = "../../tf-modules/gce-custom-kubernetes"
+
+  pub_key           = "${var.pub_key}"
+  region            = "${var.region}"
+  subnet_cidr       = "${var.subnet_cidr}"
+  res_prefix        = "${var.res_prefix}"
+  project           = "${var.project}"
+  owner             = "${var.owner}"
+  cluster_zones     = "${var.cluster_zones}"
+  network           = "${module.network.network_name}"
+  subnetwork        = "${module.network.subnetwork_name}"
+  jumpbox_create    = false
+}
