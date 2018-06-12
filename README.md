@@ -14,6 +14,7 @@ What things you need to install the software and how to install them
 * ansible
 * Jinja2
 * python-netaddr
+* kubectl
 
 Prerequisites can be installed on ubuntu 16.04 by running included script. You will need to have sudo on system:
 ```
