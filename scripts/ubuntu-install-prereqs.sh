@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get update
-sudo apt-get install unzip jq python-pip -y
+sudo apt-get install unzip jq python-pip python-netaddr -y
 sudo pip install ansible
 sudo pip install jinja2
 sudo pip install jinja2-cli

@@ -10,8 +10,10 @@ What things you need to install the software and how to install them
 * git
 * A service account json key from gcp with Compute Admin privilages, this will also be used to configure gcloud sdk
 * terraform
+* pip
 * ansible
 * Jinja2
+* python-netaddr
 
 Prerequisites can be installed on ubuntu 16.04 by running included script. You will need to have sudo on system:
 ```
