@@ -1,6 +1,7 @@
 [all]
 ## Configure 'ip' variable to bind kubernetes services on a
 ## different ip than the default iface
+{% if bastion_ip %}
 {% for item in masters -%}
 master{{ loop.index0 + 1 }} ansible_ssh_host={{ item }} ip={{ item }}
 {% endfor -%}
@@ -8,12 +9,17 @@ master{{ loop.index0 + 1 }} ansible_ssh_host={{ item }} ip={{ item }}
 node{{ loop.index0 + 1 }} ansible_ssh_host={{ item }} ip={{ item }}
 {% endfor %}
 ## configure a bastion host if your nodes are not directly reachable
-{% if bastion_ip %}
 bastion ansible_host={{ bastion_ip }}
 {% else %}
+{% for item in masters -%}
+master{{ loop.index0 + 1 }} ansible_ssh_host={{ public_masters[ loop.index0 ] }} ip={{ item }}
+{% endfor -%}
+{% for item in nodes -%}
+node{{ loop.index0 + 1 }} ansible_ssh_host={{ public_nodes[ loop.index0 ] }} ip={{ item }}
+{% endfor %}
+## configure a bastion host if your nodes are not directly reachable
 #bastion ansible_host=
 {% endif %}
-
 
 [kube-master]
 {% for item in masters -%}
