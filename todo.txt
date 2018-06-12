@@ -1,0 +1,5 @@
+- make sure user is variable instead of core
+- fix public deployment
+- fix failures due to timing issues
+- fix continuation after failure
+- fix many ssh-agents having long lives
