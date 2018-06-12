@@ -62,6 +62,7 @@ pwd
 .../demo-k8s-kubespray-gcp/k8s-impl/<myproject>
 ./kubespray.sh
 ```
+* While working out some issues ./kubespray.sh can be run multiple times. 
 
 Tear down k8s environment
 
@@ -82,6 +83,11 @@ google_compute_health_check.mig-health-check: Refreshing state... (ID: demo-k8s-
     Enter a value: yes
 ```
 
+## Troubleshooting
+
+#Connection issues
+
+At times I have run into cannot connect to master issues or other systems. If it is first run, it just might be intermittent. Still investigating if timing issue. I have just run once more, and problem has been resolved. 
 
 ## Authors
 

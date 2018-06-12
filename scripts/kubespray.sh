@@ -77,4 +77,8 @@ jq -n --arg lb_ip "$lb_ip" '{ "lb_ip": $lb_ip  }'|jinja2 $git_root/templates/gro
 ansible-playbook -vvv -i inventory/hosts.ini cluster.yml --flush-cache
 
 #change the admin.conf file to the current lb_ip
-sed -i -e "s/lb-apiserver.kubernetes.local/$lb_ip/g" artifacts/admin.conf
+sed -i -e "s/lb-apiserver.kubernetes.local/$lb_ip/g" inventory/artifacts/admin.conf
+
+## echo out set KUBECONFIG
+echo "Set your KUBECONFIG"
+echo "export KUBECONFIG=$(pwd)/inventory/artifacts/admin.conf"
