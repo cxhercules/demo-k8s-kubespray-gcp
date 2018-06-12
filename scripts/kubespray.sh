@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # Prereqs
-#sudo pip install ansible
-#sudo pip install jinja2
-#sudo pip install jinja2-cli
+#ansible
+#jinja2
+#jinja2-cli
+#jq
+#terraform
 
 ## requirements
 # - gcp_creds.json in customer directory
@@ -18,9 +20,9 @@ what_dir=$(basename $(dirname ${cwd}))
 # sets default value, but can be overwritten
 kubespray_version=${kubespray_versionx:-v2.4.0}
 
-## ensure we are in customer folder
+## ensure we are in implementation folder
 if [ "${what_dir}" != "k8s-impl" ]; then
-   echo "Please run from implementation directory customer folder at $git_root/k8s-impl/<customer_folder>/" 
+   echo "Please run from implementation directory at $git_root/k8s-impl/<implementation_folder>/" 
    exit -1
 fi
 
@@ -44,7 +46,7 @@ terraform plan -out cust.plan
 terraform apply cust.plan
 
 # gather terraform outputs and gcloud info form master/worker ip addresses
-bastion_ip=$(terraform output bastion_ip)
+bastion_ip=$(terraform output bastion_ip 2>/dev/null)
 lb_ip=$(terraform output lb_ip)
 master_ips=$(gcloud compute instances list --filter="${res_prefix}-masters" --format=json |jq -r '.[].networkInterfaces[].networkIP'|tr "\n" " "| sed -e "s/ \{1,\}$//")
 node_ips=$(gcloud compute instances list --filter="${res_prefix}-workers" --format=json |jq -r '.[].networkInterfaces[].networkIP'|tr "\n" " "| sed -e "s/ \{1,\}$//")

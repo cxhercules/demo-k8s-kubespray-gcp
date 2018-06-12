@@ -8,7 +8,12 @@ master{{ loop.index0 + 1 }} ansible_ssh_host={{ item }} ip={{ item }}
 node{{ loop.index0 + 1 }} ansible_ssh_host={{ item }} ip={{ item }}
 {% endfor %}
 ## configure a bastion host if your nodes are not directly reachable
+{% if bastion_ip %}
 bastion ansible_host={{ bastion_ip }}
+{% else %}
+#bastion ansible_host=
+{% endif %}
+
 
 [kube-master]
 {% for item in masters -%}
@@ -36,9 +41,16 @@ nodes{{ loop.index0 + 1 }}
 {% for item in nodes -%}
 node{{ loop.index0 + 1 }}
 {% endfor %}
+[kube-ingress]
+{% for item in nodes -%}
+node{{ loop.index0 + 1 }}
+{% endfor %}
+
 [k8s-cluster:children]
 kube-node
 kube-master
+kube-ingress
+
 
 [all:vars]
 ansible_ssh_user=core

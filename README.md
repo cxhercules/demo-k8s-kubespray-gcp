@@ -8,10 +8,29 @@ The following below will guide you to getting started.
 
 What things you need to install the software and how to install them
 * git
-* A service account json key from gcp.
+* A service account json key from gcp with Compute Admin privilages, this will also be used to configure gcloud sdk
 * terraform
 * ansible
+* Jinja2
 
+Prerequisites can be installed on ubuntu 16.04 by running included script. You will need to have sudo on system:
+```
+git clone https://github.com/cxhercules/demo-k8s-kubespray-gcp.git
+cd demo-k8s-kubespray-gcp/
+./scripts/ubuntu-install-prereqs.sh
+```
+
+GCP SDK Setup
+```
+gcloud auth activate-service-account --key-file gcp-creds.json
+Activated service account credentials for: [<service-account-name>@<project>.iam.gserviceaccount.com]
+```
+
+If you don't run above you may see this error when running kubespray.sh script:
+```
+ERROR: (gcloud.compute.instances.list) Some requests did not succeed:
+ - Insufficient Permission
+```
 
 ### Installing
 Create a new k8s deployment.
