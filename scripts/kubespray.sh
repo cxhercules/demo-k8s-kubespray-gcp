@@ -18,7 +18,7 @@ what_dir=$(basename $(dirname ${cwd}))
 
 
 # sets default value, but can be overwritten
-kubespray_version=${kubespray_versionx:-v2.4.0}
+kubespray_version=${kubespray_versionx:-v2.5.0}
 
 ## ensure we are in implementation folder
 if [ "${what_dir}" != "k8s-impl" ]; then
