@@ -28,7 +28,7 @@ fi
 
 # customer prefix and api key
 export $(grep res_prefix terraform.tfvars |tr -d "[:blank:]"|sed 's/#.*$//')
-export $(grep api_key terraform.tfvars |tr -d "[:blank:]"|sed 's/#.*$//')
+export $(grep api_key terraform.tfvars |tr -d "[:blank:]"|sed -e 's/#.*$//' -e 's/"//g')
 
 ## activate service account
 gcloud auth activate-service-account --key-file ${api_key}
