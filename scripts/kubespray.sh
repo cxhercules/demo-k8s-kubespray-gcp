@@ -26,8 +26,12 @@ if [ "${what_dir}" != "k8s-impl" ]; then
    exit -1
 fi
 
-# customer prefix
+# customer prefix and api key
 export $(grep res_prefix terraform.tfvars |tr -d "[:blank:]")
+export $(grep api_key terraform.tfvars |tr -d "[:blank:]")
+
+## activate service account
+gcloud auth activate-service-account --key-file ${api_key}
 
 # Create new rsa keys
 if [ ! -f cust_id_rsa ] ; then 
