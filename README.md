@@ -16,8 +16,10 @@ What things you need to install the software and how to install them
 * python-netaddr
 * kubectl
 
-Prerequisites can be installed on ubuntu 16.04 by running included script. You will need to have sudo on system:
+
+### Prerequisites can be installed on default debian 9.5 or ubuntu 16.04 by running included script. You will need to have sudo on system:
 ```
+sudo apt-get update && sudo apt-get install git -y
 git clone https://github.com/cxhercules/demo-k8s-kubespray-gcp.git
 cd demo-k8s-kubespray-gcp/
 ./scripts/ubuntu-install-prereqs.sh
