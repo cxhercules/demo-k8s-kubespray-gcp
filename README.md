@@ -15,6 +15,7 @@ What things you need to install the software and how to install them
 * Jinja2
 * python-netaddr
 * kubectl
+* gcloud
 
 
 ### Prerequisites can be installed on default debian 9.5 or ubuntu 16.04 by running included script. You will need to have sudo on system:
@@ -23,18 +24,6 @@ sudo apt-get update && sudo apt-get install git -y
 git clone https://github.com/cxhercules/demo-k8s-kubespray-gcp.git
 cd demo-k8s-kubespray-gcp/
 ./scripts/ubuntu-install-prereqs.sh
-```
-
-GCP SDK Setup
-```
-gcloud auth activate-service-account --key-file gcp-creds.json
-Activated service account credentials for: [<service-account-name>@<project>.iam.gserviceaccount.com]
-```
-
-If you don't run above you may see this error when running kubespray.sh script:
-```
-ERROR: (gcloud.compute.instances.list) Some requests did not succeed:
- - Insufficient Permission
 ```
 
 ### Installing
@@ -91,6 +80,18 @@ google_compute_health_check.mig-health-check: Refreshing state... (ID: demo-k8s-
 #Connection issues
 
 At times I have run into cannot connect to master issues or other systems. If it is first run, it just might be intermittent. Still investigating if timing issue. I have just run once more, and problem has been resolved. 
+
+GCP SDK Setup
+```
+gcloud auth activate-service-account --key-file gcp-creds.json
+Activated service account credentials for: [<service-account-name>@<project>.iam.gserviceaccount.com]
+```
+
+If you don't run above you may see this error when running kubespray.sh script:
+```
+ERROR: (gcloud.compute.instances.list) Some requests did not succeed:
+ - Insufficient Permission
+```
 
 ## Authors
 
